@@ -23,7 +23,7 @@ Using the default settings provided, you would see output similar to what's show
 58.41% TMF
 10.04% URTY
 
-> source("test.R")
+$ Rscript AdaptiveAllocation.R
 2022-03 
    EDC    TMF   URTY 
 0.3154 0.5841 0.1004 
