@@ -1,0 +1,5 @@
+- Readme
+- Need to loop through several months and make sure data looks good
+- There may be some rounding errors in adjusted close - should calculate rather than rely on Yahoo data
+- Port this to python? More popular than R
+

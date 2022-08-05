@@ -1,0 +1,53 @@
+This project calculates the appropriate allocation for a factor investing
+strategy. It uses average return to select a list of investments, and 
+volatility to determine the allocation among those investments. It assumes that
+investement allocation is updated on the 1st of each month.
+
+Refer to the following link for technical details of how this allocation is calculated:
+https://bookdown.org/compfinezbook/introcompfinr/Determining-Mean-Variance-Effici.html#alternative-derivation-of-an-efficient-portfolio
+
+
+Historical data for each of the investments is collected from Yahoo Finance.
+
+To use this, modify the variables located at the beginning of 
+FactorInvesting.R:
+
+tickers: The tickers of the universe of investments  to select from
+timing_period: The number of months used to calculate the return for each investment
+volatility_period: The number of months used to calculate volatility for each investment
+backtest_period: The number of months to backtest this strategy. Set this to 1 to only calculate the investments for the upcoming month
+assets: Total number of assets to hold in any given month
+
+Using the default settings provided, you would see output similar to what's shown below. (The dates will change depending on when this is run.) As an example, for March 2022, the investment allocation would be:
+31.54% EDC
+58.41% TMF
+10.04% URTY
+
+> source("test.R")
+2022-03 
+   EDC    TMF   URTY 
+0.3154 0.5841 0.1004 
+
+2022-04 
+    DRN    URTY 
+0.92306 0.07694 
+
+2022-05 
+   DRN    EDC 
+0.7167 0.2833 
+
+2022-06 
+   EDC    DRN 
+0.6658 0.3342 
+
+2022-07 
+   TMF    EDC 
+0.5733 0.4267 
+
+2022-08 
+  TQQQ    TMF 
+0.2518 0.7482 
+
+2022-09 
+  TQQQ   URTY    DRN 
+0.1251 0.2649 0.6100 
