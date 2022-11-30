@@ -30,7 +30,9 @@ get_price_history <- function(tickers) {
   # Form the Yahoo Finance URL for ticker price data up to today
   base_url = 'https://query1.finance.yahoo.com/v7/finance/download/%s?period1=%d&period2=%d&interval=1d&events=history&includeAdjustedClose=true'
   today = Sys.Date()
-  startDate = today - months(total_months)
+  # TODO: This calculation doesn't work if total months ago doesn't have this date (e.g. Oct 31 8 months ago would be Feb 31 which isn't a real date). Second calculation goes back ~month*28 days, so could really end up as (months-1)
+  #startDate = today - months(total_months)
+  startDate = seq(Sys.Date(), length = 2, by = paste("-", total_months, " months", sep=""))[2]
   period1 = as.numeric(as.POSIXct(sprintf("%s 0:00:00 GMT", startDate)))
   # Add a day so end is midnight tonight 
   period2 = as.numeric(as.POSIXct(sprintf("%s 0:00:00 GMT", today + days(1))))
