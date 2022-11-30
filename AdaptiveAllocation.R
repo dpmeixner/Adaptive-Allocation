@@ -44,6 +44,7 @@ get_price_history <- function(tickers) {
     ticker_history = read.csv(sprintf(base_url, ticker,  period1, period2))
     ticker_history$return = c(0, tail(ticker_history$Adj.Close, -1) /
                               head(ticker_history$Adj.Close, -1) -1)
+    ticker_history$Date = as.Date(ticker_history$Date)
     price_history = append(price_history, list(ticker_history))
   }
   names(price_history) <- tickers
