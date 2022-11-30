@@ -6,8 +6,17 @@ investement allocation is updated on the 1st of each month.
 Refer to the following link for technical details of how this allocation is calculated:
 https://bookdown.org/compfinezbook/introcompfinr/Determining-Mean-Variance-Effici.html#alternative-derivation-of-an-efficient-portfolio
 
-
 Historical data for each of the investments is collected from Yahoo Finance.
+
+Prerequisites:
+This project requires R to be installed on your system. This can be done in 
+Ubuntu using:
+> apt install r-backtest
+
+It also requires the "lubridate" and "logger" packages, packages which can be 
+installed with the following commands:
+> install.packages("lubridate")
+> install.packages("logger")
 
 To use this, modify the variables located at the beginning of 
 FactorInvesting.R:
