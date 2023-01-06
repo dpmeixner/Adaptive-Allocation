@@ -54,32 +54,38 @@ get_price_history <- function(tickers) {
 
 calc_sigma <- function(prices) {  
   sigma.mat = cov(do.call(cbind, prices))
-  top.mat = cbind(2*sigma.mat, rep(1, 3))
-  bot.vec = c(rep(1, 3), 0)
+  top.mat = cbind(2*sigma.mat, 1)
+  bot.vec = c(rep(1, assets), 0)
   Am.mat = rbind(top.mat, bot.vec)
-  b.vec = c(rep(0, 3), 1)
+  b.vec = c(rep(0, assets), 1)
   z.m.mat = solve(Am.mat)%*%b.vec
-  x.vec = z.m.mat[1:3,1]
+  x.vec = z.m.mat[1:assets,1]
 
-  result = x.vec
+  zero_tickers = {}
+  n_tickers = assets
 
   # If a ticker is returned with negative allocation, it should be removed and
   # the calculation should be redone
-  if (any(x.vec < 0)) {
+  while (any(x.vec < 0)) {
     remove_idx = as.vector(which(x.vec < 0))
-    remove_ticker = names(prices[remove_idx])
-    log_debug("[negative allocation, removing ", 
-            toString(names(x.vec)[remove_idx]))
+    remove_ticker = names(x.vec)[remove_idx]
+    n_tickers = n_tickers - length(remove_idx)
+    log_debug("negative allocation, removing ", 
+            toString(remove_ticker))
     Am.mat = Am.mat[-remove_idx, -remove_idx]
     sigma.mat = sigma.mat[-remove_idx,-remove_idx]
-    b.vec = c(rep(0, 2), 1)
+    b.vec = c(rep(0, n_tickers), 1)
     z.m.mat = solve(Am.mat)%*%b.vec
-    x.vec = z.m.mat[1:2,1]
-
-    result = x.vec
-    result[remove_ticker] = 0
+    x.vec = z.m.mat[1:n_tickers,1]
+    
+    zero_tickers[remove_ticker]  = 0
   }
   
+  if (length(zero_tickers) > 0) {
+    result = data.frame(as.list(x.vec), as.list(zero_tickers))
+  } else {
+    result = x.vec
+  }
   print(result)
   cat("\n")
   sig2.px = as.numeric(t(x.vec)%*%sigma.mat%*%x.vec)
