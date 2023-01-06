@@ -61,10 +61,13 @@ calc_sigma <- function(prices) {
   z.m.mat = solve(Am.mat)%*%b.vec
   x.vec = z.m.mat[1:3,1]
 
+  result = x.vec
+
   # If a ticker is returned with negative allocation, it should be removed and
   # the calculation should be redone
   if (any(x.vec < 0)) {
     remove_idx = as.vector(which(x.vec < 0))
+    remove_ticker = names(prices[remove_idx])
     log_debug("[negative allocation, removing ", 
             toString(names(x.vec)[remove_idx]))
     Am.mat = Am.mat[-remove_idx, -remove_idx]
@@ -72,9 +75,12 @@ calc_sigma <- function(prices) {
     b.vec = c(rep(0, 2), 1)
     z.m.mat = solve(Am.mat)%*%b.vec
     x.vec = z.m.mat[1:2,1]
+
+    result = x.vec
+    result[remove_ticker] = 0
   }
   
-  print(x.vec)
+  print(result)
   cat("\n")
   sig2.px = as.numeric(t(x.vec)%*%sigma.mat%*%x.vec)
 
