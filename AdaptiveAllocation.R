@@ -1,7 +1,6 @@
 # ref: https://bookdown.org/compfinezbook/introcompfinr/Determining-Mean-Variance-Effici.html#alternative-derivation-of-an-efficient-portfolio
 
-library(lubridate)
-library(logger)
+pacman::p_load("lubridate", "logger")
 options(digits=4)
 
 ### Begin Configurable Parameters 
