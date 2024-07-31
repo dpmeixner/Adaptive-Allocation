@@ -8,11 +8,11 @@ options(digits=4)
 # List of possible tickers to include
 tickers = c('DRN', 'TMF', 'TQQQ', 'EDC', 'URTY')
 # Number of months used to calculate return of each ticker
-timing_period = 2
+timing_period = 3
 # Number of months used to calculate volailitiy of each ticker
 volatility_period = 2
 # Number of months to backtest
-backtest_period = 6
+backtest_period = 3
 # Number of assets to hold during any given month
 assets = 3
 log_threshold("INFO")
